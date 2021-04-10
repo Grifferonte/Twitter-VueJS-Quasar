@@ -5,7 +5,7 @@
         <q-btn dense flat round icon="menu" @click="left = !left" />
 
         <q-toolbar-title class="text-weight-bold">
-          <span class="gt-sm">QTwitter</span>
+          <span class="gt-sm">{{ $route.name }}</span>
           <q-icon
             name="fas fa-dove"
             size="sm"
@@ -19,14 +19,14 @@
     <q-drawer show-if-above v-model="left" side="left" bordered :width="283">
       <q-icon name="fas fa-dove" size="lg" color="primary" class="q-pa-md" />
       <q-list>
-        <q-item clickable v-ripple to="/">
+        <q-item clickable v-ripple exact to="/">
           <q-item-section avatar>
-            <q-icon color="primary" name="home" size="md" />
+            <q-icon name="home" size="md" />
           </q-item-section>
 
           <q-item-section class="text-h6 text-weight-bold">Home</q-item-section>
         </q-item>
-        <q-item clickable v-ripple to="/about">
+        <q-item clickable v-ripple exact to="/about">
           <q-item-section avatar>
             <q-icon name="help" size="md" />
           </q-item-section>
@@ -94,7 +94,6 @@
               adipiscit elit.</q-item-label
             >
           </q-item-section>
-
           <q-item-section side top>
             <q-item-label caption>5 min ago</q-item-label>
           </q-item-section>
