@@ -6,12 +6,7 @@
 
         <q-toolbar-title class="text-weight-bold">
           <span class="gt-sm">{{ $route.name }}</span>
-          <q-icon
-            name="fas fa-dove"
-            size="sm"
-            color="primary"
-            class="q-pa-md lt-md header-icon"
-          />
+          <q-icon name="fas fa-dove" size="sm" color="primary" class="q-pa-md lt-md header-icon" />
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -31,21 +26,13 @@
             <q-icon name="help" size="md" />
           </q-item-section>
 
-          <q-item-section class="text-h6 text-weight-bold"
-            >About</q-item-section
-          >
+          <q-item-section class="text-h6 text-weight-bold">About</q-item-section>
         </q-item>
       </q-list>
     </q-drawer>
 
     <q-drawer show-if-above v-model="right" side="right" bordered>
-      <q-input
-        class="q-ma-md"
-        placeholder="Search Qwitter"
-        outlined
-        rounded
-        dense
-      >
+      <q-input class="q-ma-md" placeholder="Search Qwitter" outlined rounded dense>
         <template v-slot:prepend>
           <q-icon name="search" />
         </template>
@@ -54,13 +41,11 @@
         <q-item class="q-pa-md">
           <q-item-section>
             <q-item-label class="text-grey" overline>Education</q-item-label>
-            <q-item-label class="text-weight-bold"
-              >Something amazing happened!</q-item-label
-            >
-            <q-item-label caption
-              >Secondary line text. Lorem ipsum dolor sit amet, consectetur
-              adipiscit elit.</q-item-label
-            >
+            <q-item-label class="text-weight-bold">Something amazing happened!</q-item-label>
+            <q-item-label caption>
+              Secondary line text. Lorem ipsum dolor sit amet, consectetur
+              adipiscit elit.
+            </q-item-label>
           </q-item-section>
 
           <q-item-section side top>
@@ -70,13 +55,11 @@
         <q-item class="q-pa-md">
           <q-item-section>
             <q-item-label class="text-grey" overline>Education</q-item-label>
-            <q-item-label class="text-weight-bold"
-              >Something amazing happened!</q-item-label
-            >
-            <q-item-label caption
-              >Secondary line text. Lorem ipsum dolor sit amet, consectetur
-              adipiscit elit.</q-item-label
-            >
+            <q-item-label class="text-weight-bold">Something amazing happened!</q-item-label>
+            <q-item-label caption>
+              Secondary line text. Lorem ipsum dolor sit amet, consectetur
+              adipiscit elit.
+            </q-item-label>
           </q-item-section>
 
           <q-item-section side top>
@@ -86,13 +69,11 @@
         <q-item class="q-pa-md">
           <q-item-section>
             <q-item-label class="text-grey" overline>Education</q-item-label>
-            <q-item-label class="text-weight-bold"
-              >Something amazing happened!</q-item-label
-            >
-            <q-item-label caption
-              >Secondary line text. Lorem ipsum dolor sit amet, consectetur
-              adipiscit elit.</q-item-label
-            >
+            <q-item-label class="text-weight-bold">Something amazing happened!</q-item-label>
+            <q-item-label caption>
+              Secondary line text. Lorem ipsum dolor sit amet, consectetur
+              adipiscit elit.
+            </q-item-label>
           </q-item-section>
           <q-item-section side top>
             <q-item-label caption>5 min ago</q-item-label>
@@ -119,11 +100,9 @@ export default {
 </script>
 
 <style lang="sass">
-
 .header-icon
   position: absolute
   bottom: 0
   left: 50%
   transform: translateX(-50%)
-
 </style>
