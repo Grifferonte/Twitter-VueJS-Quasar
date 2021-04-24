@@ -33,8 +33,8 @@
 
     <q-separator class="divider" size="10px" color="grey-2" />
 
-    <q-list>
-      <q-item class="q-py-md">
+    <q-list separator>
+      <q-item v-for="(qweet,index) in qweets" :key="index" class="q-py-md">
         <q-item-section avatar top>
           <q-avatar size="xl">
             <img src="https://cdn.quasar.dev/img/avatar5.jpg" />
@@ -46,13 +46,7 @@
             <strong>Grifferonte</strong>
             <span class="text-grey-7">@grifferonte</span>
           </q-item-label>
-          <q-item-label class="qweet-content text-body1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Commodi
-            reiciendis excepturi nam suscipit repudiandae quis temporibus
-            officiis tempore perspiciatis error, numquam cupiditate, quae veniam
-            minima unde dolor magnam corrupti illo!
-          </q-item-label>
+          <q-item-label class="qweet-content text-body1">{{qweet.content}}</q-item-label>
           <div class="qweet-icons row justify-between q-mt-sm">
             <q-btn flat round color="grey" icon="far fa-comment" size="sm" />
             <q-btn flat round color="grey" icon="fas fa-retweet" size="sm" />
@@ -61,19 +55,38 @@
           </div>
         </q-item-section>
 
-        <q-item-section side top>1 min ago</q-item-section>
+        <q-item-section side top>{{qweet.date | relativeDate}}</q-item-section>
       </q-item>
     </q-list>
   </q-page>
 </template>
 
 <script>
+import { formatDistance } from "date-fns";
+
 export default {
   name: "PageHome",
   data() {
     return {
-      newQweetContent: ""
+      newQweetContent: "",
+      qweets: [
+        {
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi reiciendis excepturi nam suscipit repudiandae quis temporibus officiis tempore perspiciatis error, numquam cupiditate, quae veniamminima unde dolor magnam corrupti illo!",
+          date: 1619283885087
+        },
+        {
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi reiciendis excepturi nam suscipit repudiandae quis temporibus officiis tempore perspiciatis error, numquam cupiditate, quae veniamminima unde dolor magnam corrupti illo!",
+          date: 1619283916138
+        }
+      ]
     };
+  },
+  filters: {
+    relativeDate(value) {
+      return formatDistance(value, new Date());
+    }
   }
 };
 </script>
