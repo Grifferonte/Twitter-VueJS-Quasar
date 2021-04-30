@@ -80,6 +80,8 @@
 </template>
 
 <script>
+import db from "src/boot/firebase";
+
 import { formatDistance } from "date-fns";
 
 export default {
@@ -88,16 +90,16 @@ export default {
     return {
       newQweetContent: "",
       qweets: [
-        {
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi reiciendis excepturi nam suscipit repudiandae quis temporibus officiis tempore perspiciatis error, numquam cupiditate, quae veniamminima unde dolor magnam corrupti illo!",
-          date: 1619283885087
-        },
-        {
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi reiciendis excepturi nam suscipit repudiandae quis temporibus officiis tempore perspiciatis error, numquam cupiditate, quae veniamminima unde dolor magnam corrupti illo!",
-          date: 1619283916138
-        }
+        //   {
+        //     content:
+        //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi reiciendis excepturi nam suscipit repudiandae quis temporibus officiis tempore perspiciatis error, numquam cupiditate, quae veniamminima unde dolor magnam corrupti illo!",
+        //     date: 1619283885087
+        //   },
+        //   {
+        //     content:
+        //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi reiciendis excepturi nam suscipit repudiandae quis temporibus officiis tempore perspiciatis error, numquam cupiditate, quae veniamminima unde dolor magnam corrupti illo!",
+        //     date: 1619283916138
+        //   }
       ]
     };
   },
@@ -107,7 +109,15 @@ export default {
         content: this.newQweetContent,
         date: Date.now()
       };
-      this.qweets.unshift(newQweet);
+      db.collection("qweets")
+        .add(newQweet)
+        .then(docRef => {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(error => {
+          console.error("Error adding document: ", error);
+        });
+      // this.qweets.unshift(newQweet);
       this.newQweetContent = "";
     },
     deleteQweet(qweet) {
@@ -120,6 +130,25 @@ export default {
     relativeDate(value) {
       return formatDistance(value, new Date());
     }
+  },
+  mounted() {
+    db.collection("qweets")
+      .orderBy("date")
+      .onSnapshot(snapshot => {
+        snapshot.docChanges().forEach(change => {
+          const qweetChange = change.doc.data();
+          if (change.type === "added") {
+            console.log("New qweet: ", qweetChange);
+            this.qweets.unshift(qweetChange);
+          }
+          if (change.type === "modified") {
+            console.log("Modified qweet: ", change.doc.data());
+          }
+          if (change.type === "removed") {
+            console.log("Removed qweet: ", change.doc.data());
+          }
+        });
+      });
   }
 };
 </script>
