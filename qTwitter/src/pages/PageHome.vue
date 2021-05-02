@@ -41,7 +41,7 @@
           enter-active-class="animated fadeIn slower"
           leave-active-class="animated fadeOut slower"
         >
-          <q-item v-for="(qweet) in qweets" :key="qweet.date" class="qweet q-py-md">
+          <q-item v-for="(qweet) in qweets" :key="qweet.id" class="qweet q-py-md">
             <q-item-section avatar top>
               <q-avatar size="xl">
                 <img src="https://cdn.quasar.dev/img/avatar5.jpg" />
@@ -121,9 +121,15 @@ export default {
       this.newQweetContent = "";
     },
     deleteQweet(qweet) {
-      const dateToDelete = qweet.date;
-      const index = this.qweets.findIndex(qweet => qweet.date === dateToDelete);
-      this.qweets.splice(index, 1);
+      db.collection("qweets")
+        .doc(qweet.id)
+        .delete()
+        .then(function() {
+          console.log("Docuement successfully deleted!");
+        })
+        .catch(function(error) {
+          console.error("Error removing docuement: ", error);
+        });
     }
   },
   filters: {
@@ -136,7 +142,8 @@ export default {
       .orderBy("date")
       .onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => {
-          const qweetChange = change.doc.data();
+          let qweetChange = change.doc.data();
+          qweetChange.id = change.doc.id;
           if (change.type === "added") {
             console.log("New qweet: ", qweetChange);
             this.qweets.unshift(qweetChange);
@@ -146,6 +153,10 @@ export default {
           }
           if (change.type === "removed") {
             console.log("Removed qweet: ", change.doc.data());
+            let index = this.qweets.findIndex(
+              qweet => qweet.id === qweetChange.id
+            );
+            this.qweets.splice(index, 1);
           }
         });
       });
