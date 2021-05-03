@@ -61,7 +61,14 @@
               <div class="qweet-icons row justify-between q-mt-sm">
                 <q-btn flat round color="grey" icon="far fa-comment" size="sm" />
                 <q-btn flat round color="grey" icon="fas fa-retweet" size="sm" />
-                <q-btn flat round color="grey" icon="far fa-heart" size="sm" />
+                <q-btn
+                  flat
+                  round
+                  :color="qweet.liked ? 'pink' : 'grey'"
+                  :icon="qweet.liked ? 'fas fa-heart' : 'far fa-heart'"
+                  @click="toggledLiked(qweet)"
+                  size="sm"
+                />
                 <q-btn
                   @click="deleteQweet(qweet)"
                   flat
@@ -107,7 +114,8 @@ export default {
     addNewQweet() {
       const newQweet = {
         content: this.newQweetContent,
-        date: Date.now()
+        date: Date.now(),
+        liked: false
       };
       db.collection("qweets")
         .add(newQweet)
@@ -130,6 +138,13 @@ export default {
         .catch(function(error) {
           console.error("Error removing docuement: ", error);
         });
+    },
+    toggledLiked(qweet) {
+      db.collection("qweets")
+        .doc(qweet.id)
+        .update({
+          liked: !qweet.liked
+        });
     }
   },
   filters: {
@@ -149,6 +164,10 @@ export default {
             this.qweets.unshift(qweetChange);
           }
           if (change.type === "modified") {
+            let index = this.qweets.findIndex(
+              qweet => qweet.id === qweetChange.id
+            );
+            Object.assign(this.qweets[index], qweetChange);
             console.log("Modified qweet: ", change.doc.data());
           }
           if (change.type === "removed") {
